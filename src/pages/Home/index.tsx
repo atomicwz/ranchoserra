@@ -1,5 +1,7 @@
 import React from "react";
-import { Center, Heading, Image } from "@chakra-ui/react";
+import { Button, Center, Heading, Image } from "@chakra-ui/react";
+import { DrawerMenu } from "../../components/DrawerMenu";
+import { IoIosArrowRoundForward } from "react-icons/io";
 
 const Home: React.FC = () => {
     return (
@@ -12,6 +14,12 @@ const Home: React.FC = () => {
                 mb={10}
             />
             <Heading>Bem vindo, Cristiano Ronaldo!</Heading>
+            <DrawerMenu>
+                <Button variant="blue" mt={10}>
+                    Abrir Menu
+                    <IoIosArrowRoundForward size={25} />
+                </Button>
+            </DrawerMenu>
         </Center>
     );
 };
