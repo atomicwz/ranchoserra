@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { GiNotebook } from "react-icons/gi";
 import { MdAddBox } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
     children: React.ReactNode;
@@ -22,6 +23,7 @@ interface IProps {
 
 const DrawerMenu: React.FC<IProps> = ({ children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const router = useNavigate();
 
     return (
         <>
@@ -47,7 +49,13 @@ const DrawerMenu: React.FC<IProps> = ({ children }) => {
                             <GiNotebook />
                             <Link>Listar Agendamentos</Link>
                         </Flex>
-                        <Flex fontSize={24} alignItems="center" mb={5} gap={1}>
+                        <Flex
+                            fontSize={24}
+                            alignItems="center"
+                            mb={5}
+                            gap={1}
+                            onClick={() => router("agendar")}
+                        >
                             <MdAddBox />
                             <Link>Novo Agendamento</Link>
                         </Flex>

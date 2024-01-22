@@ -1,0 +1,59 @@
+
+.datepicker-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  
+  .react-datepicker-wrapper {
+    display: inline-block;
+  }
+  
+  .react-datepicker__header {
+    background-color: #8a4fff;
+    font-family: "Bai Jamjuree", sans-serif;
+    color: "white"
+  }
+  
+  .react-datepicker__navigation {
+    outline: none;
+  }
+
+  .react-datepicker__year-read-view--selected-year{
+    color: white;
+  }
+  
+  .react-datepicker__navigation--previous {
+    border-right-color: white;
+  }
+  
+  .react-datepicker__navigation--next {
+    border-left-color: white;
+  }
+
+  .react-datepicker__current-month,
+  .react-datepicker__day-name {
+    color: white;
+  }
+  
+  .react-datepicker__day--selected,
+  .react-datepicker__day--in-selecting-range,
+  .react-datepicker__day--in-range {
+    background-color: #8a4fff;
+    color: white;
+  }
+  
+  .react-datepicker__day--disabled {
+    color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .react-datepicker__day:hover {
+    background-color: #f0f0f0;
+  }
+
+  .react-datepicker__day {
+    font-family: "Bai Jamjuree", sans-serif;
+  }

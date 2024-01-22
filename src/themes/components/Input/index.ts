@@ -16,12 +16,19 @@ export const Input: ComponentStyleConfig = {
                 border: "1px solid",
                 borderColor: "teal.300",
                 _placeholder: {
-                    color: "teal.300",
+                    color: "teal.800",
                 },
                 color: "teal.800",
                 px: 2,
+                fontFamily: "'Bai Jamjuree', sans-serif",
+                height: "48px",
                 _focus: {
                     borderColor: "teal.400",
+                    border: "2px solid",
+                    background: "white",
+                },
+                _hover: {
+                    background: "white",
                     border: "2px solid",
                 },
             },

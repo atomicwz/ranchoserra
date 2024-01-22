@@ -9,7 +9,7 @@ const App: React.FC = () => {
         <Routes>
             <Route index element={<Loading />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/inicio" element={<Authenticated />} />
+            <Route path="/inicio/*" element={<Authenticated />} />
         </Routes>
     );
 };
