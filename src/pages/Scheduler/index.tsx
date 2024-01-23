@@ -12,6 +12,7 @@ import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
 import ptBR from "date-fns/locale/pt-BR";
 import "react-datepicker/dist/react-datepicker.css";
 import "./style.css";
+import { useNavigate } from "react-router-dom";
 
 registerLocale("pt-BR", ptBR);
 
@@ -19,6 +20,7 @@ const Scheduler: React.FC = () => {
     const [selectedDate, setSelectedDate] = React.useState<Date | null>(
         new Date("2024-01-01T08:30")
     );
+    const router = useNavigate();
     setDefaultLocale("pt-BR");
     const excludeSpecificDates = [
         new Date("2024-01-25T08:30"),
@@ -29,6 +31,7 @@ const Scheduler: React.FC = () => {
         <Center h="100vh" bg="primary.300" p={2} flexDirection="column">
             <Flex
                 bg="white"
+                boxShadow="md"
                 flexDirection="column"
                 p={5}
                 gap={5}
@@ -68,6 +71,17 @@ const Scheduler: React.FC = () => {
                     Agendar
                 </Button>
             </Flex>
+            <Button
+                variant="outline"
+                w="max-content"
+                _hover={{
+                    color: "primary.100",
+                }}
+                border="none"
+                onClick={() => router("/inicio")}
+            >
+                Voltar ao início
+            </Button>
         </Center>
     );
 };

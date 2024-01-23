@@ -45,7 +45,13 @@ const DrawerMenu: React.FC<IProps> = ({ children }) => {
                         Rancho Serra do Mucambo
                     </DrawerHeader>
                     <DrawerBody flexDirection="column">
-                        <Flex fontSize={24} alignItems="center" mb={5} gap={1}>
+                        <Flex
+                            fontSize={24}
+                            alignItems="center"
+                            mb={5}
+                            gap={1}
+                            onClick={() => router("agendamentos")}
+                        >
                             <GiNotebook />
                             <Link>Listar Agendamentos</Link>
                         </Flex>
