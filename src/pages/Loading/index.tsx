@@ -17,7 +17,7 @@ const Loading: React.FC = () => {
     const { user } = useAuth();
     React.useEffect(() => {
         setTimeout(() => {
-            if (user) return router("/home");
+            if (user) return router("/inicio");
             router("/login");
         }, 2000);
         // eslint-disable-next-line react-hooks/exhaustive-deps

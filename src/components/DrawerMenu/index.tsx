@@ -16,6 +16,7 @@ import {
 import { GiNotebook } from "react-icons/gi";
 import { MdAddBox } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../auth";
 
 interface IProps {
     children: React.ReactNode;
@@ -23,6 +24,7 @@ interface IProps {
 
 const DrawerMenu: React.FC<IProps> = ({ children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { logout } = useAuth();
     const router = useNavigate();
 
     return (
@@ -67,6 +69,13 @@ const DrawerMenu: React.FC<IProps> = ({ children }) => {
                         </Flex>
                     </DrawerBody>
                     <DrawerFooter>
+                        <Button
+                            colorScheme="primary.100"
+                            onClick={logout}
+                            color="teal.800"
+                        >
+                            Sair da Conta
+                        </Button>
                         <Button
                             colorScheme="primary.100"
                             onClick={onClose}

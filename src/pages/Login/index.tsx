@@ -26,7 +26,7 @@ const loginSchema = z.object({
 type LoginSchema = z.infer<typeof loginSchema>;
 
 const Login: React.FC = () => {
-    const { login } = useAuth();
+    const { login, isLoading } = useAuth();
     const router = useNavigate();
     const {
         register,
@@ -37,7 +37,7 @@ const Login: React.FC = () => {
     });
 
     const onSubmit = (data: LoginSchema) => {
-        login(data, () => router("/home"));
+        login(data, () => router("/inicio"));
     };
 
     return (
@@ -81,7 +81,12 @@ const Login: React.FC = () => {
                             {...register("password")}
                         />
                     </FormControl>
-                    <Button mt={4} type="submit" variant="blue">
+                    <Button
+                        mt={4}
+                        type="submit"
+                        variant="blue"
+                        isLoading={isLoading}
+                    >
                         Entrar
                     </Button>
                 </form>

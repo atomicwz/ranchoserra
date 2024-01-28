@@ -1,6 +1,5 @@
 import React from "react";
 import { Input, Flex, Text } from "@chakra-ui/react";
-import { UseFormReturn } from "react-hook-form";
 
 interface IProps {
     label?: string;
@@ -10,8 +9,7 @@ interface IProps {
     isDisabled?: boolean;
     value?: string;
     maxLength?: number;
-    name: string;
-    methods: UseFormReturn;
+    onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 export const TextInput: React.FC<IProps> = ({
@@ -22,6 +20,7 @@ export const TextInput: React.FC<IProps> = ({
     isDisabled,
     value,
     maxLength,
+    onChange,
 }) => {
     return (
         <Flex flexDirection="column" gap={1}>
@@ -35,6 +34,7 @@ export const TextInput: React.FC<IProps> = ({
                 placeholder={placeholder}
                 type={type}
                 value={value}
+                onChange={onChange}
             />
         </Flex>
     );

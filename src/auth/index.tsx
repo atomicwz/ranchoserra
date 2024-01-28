@@ -4,18 +4,12 @@ import React, { createContext, useContext, ReactNode } from "react";
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../resources/api";
-import { Login } from "../resources/interfaces";
-
-export interface IUser {
-    id: string;
-    name: string;
-    email: string;
-}
+import { Login, User } from "../resources/interfaces";
 
 interface AuthContextType {
     login: (loginData: Login, onSuccess: () => void) => void;
     logout: () => void;
-    user?: IUser;
+    user?: User;
     isLoading: boolean;
 }
 
@@ -43,7 +37,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             const response = await axiosInstance(null).post(`/session/login`, {
                 ...loginData,
             });
-            if (response.status === 200 && response.data) {
+            if (response.status === 201 && response.data) {
+                localStorage.setItem("userInfo", JSON.stringify(response.data));
                 onSuccess();
             }
         } catch (error: any) {
