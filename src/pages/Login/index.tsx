@@ -1,10 +1,45 @@
 import React from "react";
-import { Button, Center, Flex, Heading, Image } from "@chakra-ui/react";
-import { TextInput } from "../../components/TextInput";
+import {
+    Button,
+    Center,
+    Flex,
+    FormControl,
+    FormErrorMessage,
+    FormLabel,
+    Heading,
+    Image,
+    Input,
+} from "@chakra-ui/react";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useAuth } from "../../auth";
 import { useNavigate } from "react-router-dom";
 
-const App: React.FC = () => {
+const loginSchema = z.object({
+    email: z.string().email({ message: "Insira um endereço de e-mail válido" }),
+    password: z
+        .string()
+        .min(6, { message: "A senha deve ter pelo menos 6 caracteres" }),
+});
+
+type LoginSchema = z.infer<typeof loginSchema>;
+
+const Login: React.FC = () => {
+    const { login } = useAuth();
     const router = useNavigate();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginSchema>({
+        resolver: zodResolver(loginSchema),
+    });
+
+    const onSubmit = (data: LoginSchema) => {
+        login(data, () => router("/home"));
+    };
+
     return (
         <Center h="100vh" bg="primary.300" p={2} flexDirection="column">
             <Flex
@@ -26,11 +61,30 @@ const App: React.FC = () => {
                     mx="auto"
                     mb={10}
                 />
-                <TextInput label="Usuario:" />
-                <TextInput label="Senha:" type="password" />
-                <Button variant="blue" mt={5} onClick={() => router("/inicio")}>
-                    Entrar
-                </Button>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <FormControl isInvalid={!!errors.email}>
+                        <FormLabel>Email:</FormLabel>
+                        <Input
+                            type="email"
+                            placeholder="exemplo@exemplo.com"
+                            {...register("email")}
+                        />
+                        <FormErrorMessage>
+                            {errors.password?.message}
+                        </FormErrorMessage>
+                    </FormControl>
+                    <FormControl mt={4} isInvalid={!!errors.password}>
+                        <FormLabel>Senha:</FormLabel>
+                        <Input
+                            type="password"
+                            placeholder="Digite uma senha"
+                            {...register("password")}
+                        />
+                    </FormControl>
+                    <Button mt={4} type="submit" variant="blue">
+                        Entrar
+                    </Button>
+                </form>
             </Flex>
             <Image
                 src="/credits.svg"
@@ -44,4 +98,4 @@ const App: React.FC = () => {
     );
 };
 
-export default App;
+export default Login;

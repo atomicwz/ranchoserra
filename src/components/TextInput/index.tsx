@@ -1,20 +1,21 @@
 import React from "react";
 import { Input, Flex, Text } from "@chakra-ui/react";
+import { UseFormReturn } from "react-hook-form";
 
 interface IProps {
     label?: string;
     placeholder?: string;
-    onChange?: React.ChangeEventHandler<HTMLInputElement>;
     type?: React.HTMLInputTypeAttribute;
     isReadOnly?: boolean;
     isDisabled?: boolean;
     value?: string;
     maxLength?: number;
+    name: string;
+    methods: UseFormReturn;
 }
 
 export const TextInput: React.FC<IProps> = ({
     label,
-    onChange,
     placeholder,
     type,
     isReadOnly,
@@ -34,7 +35,6 @@ export const TextInput: React.FC<IProps> = ({
                 placeholder={placeholder}
                 type={type}
                 value={value}
-                onChange={onChange}
             />
         </Flex>
     );

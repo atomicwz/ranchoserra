@@ -18,6 +18,9 @@ export const Input: ComponentStyleConfig = {
                 color: "teal.800",
                 px: 2,
                 fontFamily: "'Bai Jamjuree', sans-serif",
+                _placeholder: {
+                    opacity: 0.3,
+                },
                 height: "48px",
                 _focus: {
                     borderColor: "teal.400",

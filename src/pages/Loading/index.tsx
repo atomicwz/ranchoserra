@@ -1,6 +1,7 @@
 import React from "react";
 import { Center, Heading, Image, keyframes } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../auth";
 
 const rotateAnimation = keyframes`
   from {
@@ -13,8 +14,10 @@ const rotateAnimation = keyframes`
 
 const Loading: React.FC = () => {
     const router = useNavigate();
+    const { user } = useAuth();
     React.useEffect(() => {
         setTimeout(() => {
+            if (user) return router("/home");
             router("/login");
         }, 2000);
         // eslint-disable-next-line react-hooks/exhaustive-deps
