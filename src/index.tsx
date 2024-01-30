@@ -5,6 +5,7 @@ import { theme } from "./themes";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./routes";
 import { AuthProvider } from "./auth";
+import { GlobalStoreProvider } from "./context";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -14,9 +15,11 @@ root.render(
         <ChakraProvider theme={theme}>
             <BrowserRouter>
                 <AuthProvider>
-                    <Routes>
-                        <Route path="*" element={<App />} />
-                    </Routes>
+                    <GlobalStoreProvider>
+                        <Routes>
+                            <Route path="*" element={<App />} />
+                        </Routes>
+                    </GlobalStoreProvider>
                 </AuthProvider>
             </BrowserRouter>
         </ChakraProvider>
