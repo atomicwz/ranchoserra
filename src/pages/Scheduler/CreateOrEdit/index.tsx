@@ -39,6 +39,7 @@ export type SchedulerSchema = z.infer<typeof schedulerSchema>;
 
 const CreateOrEdit: React.FC = observer(() => {
     const { user } = useAuth();
+    const [blockedDates, setBlockedDates] = React.useState<Date[]>([]);
     const {
         register,
         handleSubmit,
@@ -59,8 +60,12 @@ const CreateOrEdit: React.FC = observer(() => {
         );
     };
     React.useEffect(() => {
-        store.getAllDates(user?.access_token as string);
-    }, []);
+        const fetchData = async () => {
+            await store.getAllDates(user?.access_token as string);
+            setBlockedDates(store.blockedDates);
+        };
+        fetchData();
+    }, [store]);
     return (
         <Center h="100vh" bg="primary.300" p={2} flexDirection="column">
             <Flex
@@ -148,20 +153,16 @@ const CreateOrEdit: React.FC = observer(() => {
                                     name="checkInDate"
                                     render={({ field }) => (
                                         <DatePicker
-                                            selected={field.value}
+                                            selected={field.value || new Date()}
                                             onChange={(date) =>
                                                 field.onChange(date)
                                             }
                                             dateFormat="dd/MM/yyyy"
                                             showYearDropdown
                                             customInput={
-                                                <Input
-                                                    isReadOnly
-                                                    maxLength={10}
-                                                    cursor="pointer"
-                                                />
+                                                <Input cursor="pointer" />
                                             }
-                                            excludeDates={store.blockedDates}
+                                            excludeDates={blockedDates}
                                         />
                                     )}
                                 />
@@ -178,20 +179,16 @@ const CreateOrEdit: React.FC = observer(() => {
                                     name="checkOutDate"
                                     render={({ field }) => (
                                         <DatePicker
-                                            selected={field.value}
+                                            selected={field.value || new Date()}
                                             onChange={(date) =>
                                                 field.onChange(date)
                                             }
                                             dateFormat="dd/MM/yyyy"
                                             showYearDropdown
                                             customInput={
-                                                <Input
-                                                    w="100%"
-                                                    maxLength={10}
-                                                    cursor="pointer"
-                                                />
+                                                <Input cursor="pointer" />
                                             }
-                                            excludeDates={store.blockedDates}
+                                            excludeDates={blockedDates}
                                         />
                                     )}
                                 />
