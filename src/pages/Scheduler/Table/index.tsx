@@ -101,7 +101,7 @@ const TableView: React.FC = observer(() => {
                 mt={5}
                 gap={5}
                 flexDirection="column"
-                w={{ md: "40%" }}
+                w={{ base: "100%", md: "80%", lg: "70%" }}
                 mx="auto"
             >
                 <Flex
