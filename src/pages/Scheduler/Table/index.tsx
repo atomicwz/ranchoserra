@@ -39,6 +39,9 @@ const TableView: React.FC = observer(() => {
     const onGoToEdit = (id: string) => {
         router(`/inicio/agendar/${id}`);
     };
+    const onGoToDetails = (id: string) => {
+        router(`/inicio/detalhes/${id}`);
+    };
 
     const openDialog = (id: string) => {
         dialog.showDialog({
@@ -136,6 +139,7 @@ const TableView: React.FC = observer(() => {
                     isLoading={store.loader}
                     onDelete={openDialog}
                     onEdit={onGoToEdit}
+                    onDetails={onGoToDetails}
                 />
                 <Button
                     mx="auto"

@@ -42,8 +42,6 @@ const CreateOrEdit: React.FC = observer(() => {
     const { user } = useAuth();
     const { id } = useParams();
     const [blockedDates, setBlockedDates] = React.useState<Date[]>([]);
-    const [unlockedDates, setUnlockedDates] = React.useState<Date[]>([]);
-    const [excludeDates, setExcludeDates] = React.useState<Date[]>([]);
     const {
         register,
         handleSubmit,
@@ -67,20 +65,26 @@ const CreateOrEdit: React.FC = observer(() => {
     };
     React.useEffect(() => {
         const fetchData = async () => {
+            if (id) return;
             await store.getAllDates(user?.access_token as string);
             setBlockedDates(store.blockedDates);
         };
         fetchData();
-    }, [store]);
-
-    React.useEffect(() => {
         if (id) {
             const fetchData = async () => {
+                await store.getAllDates(user?.access_token as string);
                 const request = await store.getSchedulerById(
                     user?.access_token as string,
                     id
                 );
+
                 if (request) {
+                    const excludeDates = store.dates.filter(
+                        (item) => item._id !== id
+                    );
+                    setBlockedDates(
+                        excludeDates.flatMap((dateObj) => dateObj.dates)
+                    );
                     setValue("name", request.name);
                     setValue(
                         "phone",
@@ -89,17 +93,11 @@ const CreateOrEdit: React.FC = observer(() => {
                     setValue("document", formatters.cpf(request.document));
                     setValue("checkOutDate", new Date(request.checkOutDate));
                     setValue("checkInDate", new Date(request.checkInDate));
-                    setUnlockedDates(request.dates);
-                    setExcludeDates(
-                        blockedDates.filter((dataBloqueada: Date) => {
-                            return !unlockedDates.includes(dataBloqueada);
-                        })
-                    );
                 }
             };
             fetchData();
         }
-    }, [store, setValue, blockedDates]);
+    }, [store, setValue]);
 
     return (
         <Center h="100vh" bg="primary.300" p={2} flexDirection="column">
@@ -197,12 +195,8 @@ const CreateOrEdit: React.FC = observer(() => {
                                             customInput={
                                                 <Input cursor="pointer" />
                                             }
-                                            excludeDates={blockedDates.filter(
-                                                (dataBloqueada: Date) => {
-                                                    return !unlockedDates.includes(
-                                                        dataBloqueada
-                                                    );
-                                                }
+                                            excludeDates={blockedDates.map(
+                                                (item) => new Date(item)
                                             )}
                                         />
                                     )}
@@ -229,12 +223,8 @@ const CreateOrEdit: React.FC = observer(() => {
                                             customInput={
                                                 <Input cursor="pointer" />
                                             }
-                                            excludeDates={blockedDates.filter(
-                                                (dataBloqueada: Date) => {
-                                                    return !unlockedDates.includes(
-                                                        dataBloqueada
-                                                    );
-                                                }
+                                            excludeDates={blockedDates.map(
+                                                (item) => new Date(item)
                                             )}
                                         />
                                     )}

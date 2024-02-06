@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { ImExit } from "react-icons/im";
 import { RxEnter } from "react-icons/rx";
+import { AiOutlineFileSearch } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
 import { LuPen } from "react-icons/lu";
 import { Scheduler } from "../../resources/interfaces";
@@ -25,10 +26,11 @@ interface IProps {
     isLoading: boolean;
     onDelete: (id: string) => void;
     onEdit: (id: string) => void;
+    onDetails: (id: string) => void;
 }
 
 const SchedulerTable: React.FC<IProps> = observer(
-    ({ scheduler, onDelete, isLoading, onEdit }) => {
+    ({ scheduler, onDelete, isLoading, onEdit, onDetails }) => {
         const headers = [
             "Nome do Cliente",
             "Data de entrada",
@@ -118,6 +120,13 @@ const SchedulerTable: React.FC<IProps> = observer(
                                                 size={15}
                                                 cursor="pointer"
                                                 onClick={() => onEdit(item._id)}
+                                            />
+                                            <AiOutlineFileSearch
+                                                size={15}
+                                                cursor="pointer"
+                                                onClick={() =>
+                                                    onDetails(item._id)
+                                                }
                                             />
                                         </Flex>
                                     </Td>

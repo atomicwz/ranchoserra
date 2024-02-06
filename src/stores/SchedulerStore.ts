@@ -71,6 +71,7 @@ export default class SchedulerStore {
             const request = await axiosInstance(token).get<Scheduler>(
                 `/rentals/${id}`
             );
+            this.scheduler = request.data;
             return request.data;
         } catch (error: any) {
             showErrorToast(error.response.data.error.message[0]);
