@@ -1,7 +1,7 @@
 import moment from "moment";
 
 const formatters = {
-    mask: (v: string) => {
+    cpf: (v: string) => {
         v = v.replace(/\D/g, "");
 
         if (v.length <= 11) {
@@ -14,7 +14,6 @@ const formatters = {
             v = v.replace(/\.(\d{3})(\d)/, ".$1/$2");
             v = v.replace(/(\d{4})(\d)/, "$1-$2");
         }
-        console.log(v);
         return v;
     },
     onlyNumbers: (numero: string) => {

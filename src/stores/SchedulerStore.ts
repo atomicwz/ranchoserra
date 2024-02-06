@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { makeAutoObservable } from "mobx";
 import { axiosInstance } from "../resources/api";
 import { SchedulerSchema } from "../pages/Scheduler/CreateOrEdit";
@@ -7,6 +8,7 @@ import { Dates, Scheduler } from "../resources/interfaces";
 export default class SchedulerStore {
     public loader = false;
     public schedulerList: Scheduler[] = [];
+    public scheduler: Scheduler | null = null;
     public dates: Dates[] = [];
     public blockedDates: Date[] = [];
 
@@ -17,13 +19,20 @@ export default class SchedulerStore {
     public createScheduler = async (
         data: SchedulerSchema,
         token: string,
-        onSuccess: () => void
+        onSuccess: () => void,
+        id?: string
     ) => {
         this.loader = true;
         try {
-            await axiosInstance(token).post("/rentals", { ...data });
-            showSuccessToast("Agendamento criado!");
-            onSuccess();
+            if (id) {
+                await axiosInstance(token).patch(`/rentals/${id}`, { ...data });
+                showSuccessToast("Agendamento Editado com sucesso!!");
+                onSuccess();
+            } else {
+                await axiosInstance(token).post("/rentals", { ...data });
+                showSuccessToast("Agendamento criado!");
+                onSuccess();
+            }
         } catch (error: any) {
             showErrorToast(error.response.data.error.message[0]);
         } finally {
@@ -31,13 +40,38 @@ export default class SchedulerStore {
         }
     };
 
-    public getSchedulers = async (token: string) => {
+    public getSchedulers = async (
+        token: string,
+        isFinalized: boolean | null
+    ) => {
         this.loader = true;
         try {
             const request = await axiosInstance(token).get<Scheduler[]>(
-                "/rentals"
+                "/rentals",
+                {
+                    params: {
+                        finishedRent: isFinalized,
+                    },
+                }
             );
             this.schedulerList = request.data;
+        } catch (error: any) {
+            showErrorToast(error.response.data.error.message[0]);
+        } finally {
+            this.loader = false;
+        }
+    };
+
+    public getSchedulerById = async (
+        token: string,
+        id: string
+    ): Promise<Scheduler | void> => {
+        this.loader = true;
+        try {
+            const request = await axiosInstance(token).get<Scheduler>(
+                `/rentals/${id}`
+            );
+            return request.data;
         } catch (error: any) {
             showErrorToast(error.response.data.error.message[0]);
         } finally {
@@ -73,5 +107,9 @@ export default class SchedulerStore {
         } finally {
             this.loader = false;
         }
+    };
+
+    public setInitialValues = (data: Scheduler) => {
+        this.scheduler = data;
     };
 }

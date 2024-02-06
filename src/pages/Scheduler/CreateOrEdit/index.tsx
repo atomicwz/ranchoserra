@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React from "react";
 import {
     Button,
@@ -11,7 +12,7 @@ import {
     Input,
 } from "@chakra-ui/react";
 import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import ptBR from "date-fns/locale/pt-BR";
@@ -39,10 +40,14 @@ export type SchedulerSchema = z.infer<typeof schedulerSchema>;
 
 const CreateOrEdit: React.FC = observer(() => {
     const { user } = useAuth();
+    const { id } = useParams();
     const [blockedDates, setBlockedDates] = React.useState<Date[]>([]);
+    const [unlockedDates, setUnlockedDates] = React.useState<Date[]>([]);
+    const [excludeDates, setExcludeDates] = React.useState<Date[]>([]);
     const {
         register,
         handleSubmit,
+        setValue,
         control,
         formState: { errors },
     } = useForm<SchedulerSchema>({
@@ -56,7 +61,8 @@ const CreateOrEdit: React.FC = observer(() => {
         store.createScheduler(
             { ...data, document: formatters.onlyNumbers(data.document) },
             user?.access_token as string,
-            () => router("/inicio/agendamentos")
+            () => router("/inicio/agendamentos"),
+            id
         );
     };
     React.useEffect(() => {
@@ -66,6 +72,35 @@ const CreateOrEdit: React.FC = observer(() => {
         };
         fetchData();
     }, [store]);
+
+    React.useEffect(() => {
+        if (id) {
+            const fetchData = async () => {
+                const request = await store.getSchedulerById(
+                    user?.access_token as string,
+                    id
+                );
+                if (request) {
+                    setValue("name", request.name);
+                    setValue(
+                        "phone",
+                        formatters.formatPhoneNumber(request.phone)
+                    );
+                    setValue("document", formatters.cpf(request.document));
+                    setValue("checkOutDate", new Date(request.checkOutDate));
+                    setValue("checkInDate", new Date(request.checkInDate));
+                    setUnlockedDates(request.dates);
+                    setExcludeDates(
+                        blockedDates.filter((dataBloqueada: Date) => {
+                            return !unlockedDates.includes(dataBloqueada);
+                        })
+                    );
+                }
+            };
+            fetchData();
+        }
+    }, [store, setValue, blockedDates]);
+
     return (
         <Center h="100vh" bg="primary.300" p={2} flexDirection="column">
             <Flex
@@ -126,7 +161,7 @@ const CreateOrEdit: React.FC = observer(() => {
                                         placeholder="999.999.999-99"
                                         maxLength={14}
                                         onChange={(e) => {
-                                            const formatted = formatters.mask(
+                                            const formatted = formatters.cpf(
                                                 e.target.value
                                             );
                                             field.onChange(formatted);
@@ -162,7 +197,13 @@ const CreateOrEdit: React.FC = observer(() => {
                                             customInput={
                                                 <Input cursor="pointer" />
                                             }
-                                            excludeDates={blockedDates}
+                                            excludeDates={blockedDates.filter(
+                                                (dataBloqueada: Date) => {
+                                                    return !unlockedDates.includes(
+                                                        dataBloqueada
+                                                    );
+                                                }
+                                            )}
                                         />
                                     )}
                                 />
@@ -188,7 +229,13 @@ const CreateOrEdit: React.FC = observer(() => {
                                             customInput={
                                                 <Input cursor="pointer" />
                                             }
-                                            excludeDates={blockedDates}
+                                            excludeDates={blockedDates.filter(
+                                                (dataBloqueada: Date) => {
+                                                    return !unlockedDates.includes(
+                                                        dataBloqueada
+                                                    );
+                                                }
+                                            )}
                                         />
                                     )}
                                 />

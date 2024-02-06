@@ -19,6 +19,7 @@ const Authenticated: React.FC = observer(() => {
     return (
         <Routes>
             <Route index element={<Home />} />
+            <Route path="/agendar/:id" element={<Scheduler.CreateOrEdit />} />
             <Route path="/agendar" element={<Scheduler.CreateOrEdit />} />
             <Route path="/agendamentos" element={<Scheduler.TableView />} />
         </Routes>

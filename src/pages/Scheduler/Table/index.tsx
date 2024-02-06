@@ -6,23 +6,39 @@ import {
     useDisclosure,
     Collapse,
     Text,
+    Switch,
+    FormControl,
+    FormLabel,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { SchedulerTable } from "../../../components/SchedulerTable";
-import { FilterScheduler } from "../../../components/FilterScheduler";
 import { IoIosSearch } from "react-icons/io";
 import { observer, useLocalObservable } from "mobx-react";
 import { useAuth } from "../../../auth";
 import { useGlobalStore } from "../../../context";
 import SchedulerStore from "../../../stores/SchedulerStore";
+// import { FilterScheduler } from "../../../components/FilterScheduler";
 
 const TableView: React.FC = observer(() => {
     const router = useNavigate();
+    const [isChecked, setIsChecked] = React.useState<boolean | null>(null);
     const { user } = useAuth();
     const { isOpen, onToggle } = useDisclosure();
     const store = useLocalObservable(() => new SchedulerStore());
 
+    const handleChange = () => {
+        if (isChecked) {
+            setIsChecked(null);
+            return;
+        }
+        setIsChecked(true);
+    };
+
     const { dialog } = useGlobalStore();
+
+    const onGoToEdit = (id: string) => {
+        router(`/inicio/agendar/${id}`);
+    };
 
     const openDialog = (id: string) => {
         dialog.showDialog({
@@ -39,7 +55,8 @@ const TableView: React.FC = observer(() => {
                             id,
                             () =>
                                 store.getSchedulers(
-                                    user?.access_token as string
+                                    user?.access_token as string,
+                                    isChecked
                                 )
                         );
                         dialog.closeDialog();
@@ -72,8 +89,9 @@ const TableView: React.FC = observer(() => {
     };
 
     React.useEffect(() => {
-        store.getSchedulers(user?.access_token as string);
-    }, []);
+        store.getSchedulers(user?.access_token as string, isChecked);
+    }, [isChecked]);
+
     return (
         <Center h="100vh" bg="primary.300" p={2} flexDirection="column">
             <Flex
@@ -99,12 +117,25 @@ const TableView: React.FC = observer(() => {
                     </Text>
                 </Flex>
                 <Collapse in={isOpen} animateOpacity>
-                    <FilterScheduler />
+                    {/* <FilterScheduler /> */}
+                    <FormControl display="flex" alignItems="center">
+                        <FormLabel htmlFor="finishedAppointments" mb="0">
+                            Finalizados?
+                        </FormLabel>
+                        <Switch
+                            id="finishedAppointments"
+                            colorScheme="teal"
+                            size="lg"
+                            isChecked={isChecked!}
+                            onChange={handleChange}
+                        />
+                    </FormControl>
                 </Collapse>
                 <SchedulerTable
                     scheduler={store.schedulerList}
-                    onDelete={openDialog}
                     isLoading={store.loader}
+                    onDelete={openDialog}
+                    onEdit={onGoToEdit}
                 />
                 <Button
                     mx="auto"

@@ -24,10 +24,11 @@ interface IProps {
     scheduler: Scheduler[];
     isLoading: boolean;
     onDelete: (id: string) => void;
+    onEdit: (id: string) => void;
 }
 
 const SchedulerTable: React.FC<IProps> = observer(
-    ({ scheduler, onDelete, isLoading }) => {
+    ({ scheduler, onDelete, isLoading, onEdit }) => {
         const headers = [
             "Nome do Cliente",
             "Data de entrada",
@@ -113,7 +114,11 @@ const SchedulerTable: React.FC<IProps> = observer(
                                                 size={20}
                                                 cursor="pointer"
                                             />
-                                            <LuPen size={15} cursor="pointer" />
+                                            <LuPen
+                                                size={15}
+                                                cursor="pointer"
+                                                onClick={() => onEdit(item._id)}
+                                            />
                                         </Flex>
                                     </Td>
                                 </Tr>
