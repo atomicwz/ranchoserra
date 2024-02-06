@@ -22,7 +22,12 @@ const Details: React.FC = observer(() => {
     }, [store]);
 
     return (
-        <Center h="100vh" bg="primary.300" p={2} flexDirection="column">
+        <Center
+            h={{ base: "unset", md: "100vh" }}
+            bg="primary.300"
+            p={2}
+            flexDirection="column"
+        >
             <Flex
                 bg="white"
                 boxShadow="md"
@@ -68,6 +73,7 @@ const Details: React.FC = observer(() => {
                 _hover={{
                     color: "primary.100",
                 }}
+                mt={5}
                 border="none"
                 onClick={() => router("/inicio")}
             >
