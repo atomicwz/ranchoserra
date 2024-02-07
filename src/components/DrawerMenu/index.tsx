@@ -38,12 +38,12 @@ const DrawerMenu: React.FC<IProps> = ({ children }) => {
             >
                 <DrawerOverlay />
                 <DrawerContent
-                    color="teal.800"
-                    bg="primary.300"
+                    color="white"
+                    bg="primary.100"
                     fontFamily="'Bai Jamjuree', sans-serif"
                 >
                     <DrawerCloseButton />
-                    <DrawerHeader color="teal.800" fontSize={32}>
+                    <DrawerHeader color="white" fontSize={32}>
                         Rancho Serra do Mucambo
                     </DrawerHeader>
                     <DrawerBody flexDirection="column">
@@ -72,14 +72,14 @@ const DrawerMenu: React.FC<IProps> = ({ children }) => {
                         <Button
                             colorScheme="primary.100"
                             onClick={logout}
-                            color="teal.800"
+                            color="white"
                         >
                             Sair da Conta
                         </Button>
                         <Button
                             colorScheme="primary.100"
                             onClick={onClose}
-                            color="teal.800"
+                            color="white"
                         >
                             Fechar
                         </Button>

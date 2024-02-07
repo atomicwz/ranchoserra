@@ -3,15 +3,6 @@ import { Center, Heading, Image, keyframes } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth";
 
-const rotateAnimation = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
 const Loading: React.FC = () => {
     const router = useNavigate();
     const { user } = useAuth();
@@ -24,14 +15,7 @@ const Loading: React.FC = () => {
     }, []);
     return (
         <Center h="100vh" bg="primary.300" p={2} flexDirection="column">
-            <Image
-                src="/planeta-terra.png"
-                animation={`${rotateAnimation} 7s linear infinite`}
-                w={82}
-                alt="Logo"
-                mx="auto"
-                mb={10}
-            />
+            <Image src="/logo.svg" w={150} alt="Logo" mx="auto" mb={10} />
             <Heading>Aguarde...</Heading>
         </Center>
     );

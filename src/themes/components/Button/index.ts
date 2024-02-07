@@ -16,7 +16,7 @@ export const Button: ComponentStyleConfig = {
             color: "white",
             fontFamily: "'Roboto', sans-serif",
             _hover: {
-                bg: "blue.400",
+                bg: "primary.200",
             },
         }),
     },

@@ -12,7 +12,7 @@
   }
   
   .react-datepicker__header {
-    background-color: #8a4fff;
+    background-color: #61824A;
     font-family: "Bai Jamjuree", sans-serif;
     color: "white"
   }
@@ -41,7 +41,7 @@
   .react-datepicker__day--selected,
   .react-datepicker__day--in-selecting-range,
   .react-datepicker__day--in-range {
-    background-color: #8a4fff;
+    background-color: #61824A;
     color: white;
   }
   

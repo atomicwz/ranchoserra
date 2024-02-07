@@ -38,7 +38,7 @@ const Details: React.FC = observer(() => {
                 border="1px solid"
                 borderColor="teal.200"
             >
-                <Image src="/planeta-terra.png" w={82} alt="Logo" mx="auto" />
+                <Image src="/logo.svg" w={82} alt="Logo" mx="auto" />
                 <Heading textAlign="center">Detalhes da hospedagem</Heading>
                 <Flex direction="column" gap={10}>
                     <DetailsRow label="Nome" data={store.scheduler?.name} />

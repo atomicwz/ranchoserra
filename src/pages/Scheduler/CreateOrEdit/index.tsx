@@ -116,7 +116,7 @@ const CreateOrEdit: React.FC = observer(() => {
                 border="1px solid"
                 borderColor="teal.200"
             >
-                <Image src="/planeta-terra.png" w={82} alt="Logo" mx="auto" />
+                <Image src="/logo.svg" w={82} alt="Logo" mx="auto" />
                 <Heading textAlign="center">Agendar uma hospedagem</Heading>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Flex gap={4} direction="column">

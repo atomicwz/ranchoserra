@@ -8,13 +8,7 @@ const Home: React.FC = () => {
     const { user } = useAuth();
     return (
         <Center h="100vh" bg="primary.300" p={2} flexDirection="column">
-            <Image
-                src="/planeta-terra.png"
-                w={82}
-                alt="Logo"
-                mx="auto"
-                mb={10}
-            />
+            <Image src="/logo.svg" w={82} alt="Logo" mx="auto" mb={10} />
             <Heading>Bem vindo,</Heading>
             <Heading textTransform="capitalize">{user?.username}</Heading>
             <DrawerMenu>

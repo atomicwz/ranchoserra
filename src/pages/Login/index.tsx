@@ -54,13 +54,7 @@ const Login: React.FC = () => {
                 <Heading textAlign="center" mx="auto">
                     Faça seu Login
                 </Heading>
-                <Image
-                    src="/planeta-terra.png"
-                    w={82}
-                    alt="Logo"
-                    mx="auto"
-                    mb={10}
-                />
+                <Image src="/logo.svg" w={82} alt="Logo" mx="auto" mb={10} />
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <FormControl isInvalid={!!errors.email}>
                         <FormLabel>Email:</FormLabel>
