@@ -36,6 +36,7 @@ const SchedulerTable: React.FC<IProps> = observer(
             "Nome do Cliente",
             "Data de entrada",
             "Data de saída",
+            "Data de Agendamento",
             "",
         ];
         return (
@@ -124,6 +125,16 @@ const SchedulerTable: React.FC<IProps> = observer(
                                                 <Text>
                                                     {formatters.date(
                                                         item.checkOutDate
+                                                    )}
+                                                </Text>
+                                            </Flex>
+                                        </Td>
+                                        <Td fontWeight={400} gap={1}>
+                                            <Flex alignItems="center">
+                                                <ImExit />
+                                                <Text>
+                                                    {formatters.date(
+                                                        item.createdAt
                                                     )}
                                                 </Text>
                                             </Flex>
