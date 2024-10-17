@@ -14,6 +14,7 @@ export interface Scheduler {
     _id: string;
     name: string;
     document: string;
+    createdAt: Date;
     phone: string;
     checkInDate: Date;
     checkOutDate: Date;
