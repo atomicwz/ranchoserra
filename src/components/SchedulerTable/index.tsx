@@ -131,7 +131,6 @@ const SchedulerTable: React.FC<IProps> = observer(
                                         </Td>
                                         <Td fontWeight={400} gap={1}>
                                             <Flex alignItems="center">
-                                                <ImExit />
                                                 <Text>
                                                     {formatters.date(
                                                         item.createdAt
